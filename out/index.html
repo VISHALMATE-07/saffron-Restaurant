@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SAFFRON Restaurant</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <a class="logo" href="#home">
+    <span class="logo-main">SAFFRON</span>
+    <span class="logo-sub">RESTAURANT</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">&#9776;</button>
+  <nav id="nav">
+    <a href="#home" data-nav="home">Home</a>
+    <a href="#menu" data-nav="menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#admin" data-nav="admin">Admin</a>
+    <a href="#cart" class="cart-link" data-nav="cart">Cart <span id="cartCount" class="badge">0</span></a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ===================== SCREEN 1: HOME ===================== -->
+  <section id="view-home" class="view">
+    <div class="hero">
+      <div class="hero-inner">
+        <p class="hero-small">WELCOME TO</p>
+        <h1>SAFFRON</h1>
+        <p class="hero-tag">Where Every Bite Tells a Story</p>
+        <p class="hero-text">Experience delicious food, warm hospitality and unforgettable flavours.</p>
+        <a class="btn" href="#menu">Explore Menu</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2 class="section-title">Our Specialities</h2>
+      <div class="grid three">
+        <div class="card special"><div class="emoji">&#127835;</div><h3>Paneer Butter Masala</h3><p>Creamy tomato gravy with soft paneer cubes, best with hot butter naan.</p></div>
+        <div class="card special"><div class="emoji">&#127834;</div><h3>Veg Biryani</h3><p>Fragrant basmati rice slow-cooked with vegetables and saffron.</p></div>
+        <div class="card special"><div class="emoji">&#129370;</div><h3>Masala Dosa</h3><p>Crisp golden dosa filled with spiced potato, served with chutneys.</p></div>
+      </div>
+    </div>
+
+    <div class="container" id="about">
+      <h2 class="section-title">About Us</h2>
+      <div class="card about">
+        <p>SAFFRON was started with one simple idea: good food should feel like a warm welcome.
+        Our kitchen cooks fresh every day using quality ingredients and traditional recipes,
+        and our team makes sure every guest leaves happy.</p>
+        <p>Whether it is a quick lunch, a family dinner or a celebration, we are happy to serve you.</p>
+      </div>
+    </div>
+
+    <div class="container" id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="grid three">
+        <div class="card contact"><div class="emoji">&#128205;</div><h3>Address</h3><p>12 Spice Street, Food Court Road, Your City</p></div>
+        <div class="card contact"><div class="emoji">&#128222;</div><h3>Phone</h3><p>+91 98765 43210</p></div>
+        <div class="card contact"><div class="emoji">&#128337;</div><h3>Opening Hours</h3><p>Every day, 11:00 AM - 11:00 PM</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SCREEN 2: MENU + ORDER ===================== -->
+  <section id="view-menu" class="view">
+    <div class="container">
+      <h2 class="section-title">Our Menu</h2>
+      <div id="categoryBar" class="chips"></div>
+      <div id="menuGrid" class="grid menu-grid"><p class="muted">Loading menu...</p></div>
+    </div>
+  </section>
+
+  <!-- ===================== SCREEN 3: CART / CHECKOUT ===================== -->
+  <section id="view-cart" class="view">
+    <div class="container">
+      <h2 class="section-title">Your Cart</h2>
+
+      <div id="orderSuccess" class="success hidden"></div>
+
+      <div id="cartEmpty" class="card empty">
+        <p>Your cart is empty.</p>
+        <a class="btn" href="#menu">Browse Menu</a>
+      </div>
+
+      <div id="cartContent" class="cart-layout hidden">
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Item</th><th>Price</th><th>Quantity</th><th>Subtotal</th><th></th></tr>
+              </thead>
+              <tbody id="cartBody"></tbody>
+            </table>
+          </div>
+          <div class="total-row">Total: <strong id="cartTotal">&#8377;0</strong></div>
+        </div>
+
+        <div class="card checkout">
+          <h3>Customer Details</h3>
+          <form id="checkoutForm" novalidate>
+            <label for="custName">Name</label>
+            <input id="custName" type="text" maxlength="50" placeholder="Your name" autocomplete="name">
+            <label for="custPhone">Phone Number</label>
+            <input id="custPhone" type="tel" maxlength="15" placeholder="10-digit mobile number" autocomplete="tel">
+            <p id="formError" class="error"></p>
+            <button type="submit" id="placeBtn" class="btn full">Place Order</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SCREEN 4: ADMIN ===================== -->
+  <section id="view-admin" class="view">
+    <div class="container">
+      <h2 class="section-title">Admin - Order Management</h2>
+
+      <div id="adminLogin" class="card login">
+        <h3>Admin Login</h3>
+        <form id="loginForm">
+          <label for="adminPass">Password</label>
+          <input id="adminPass" type="password" placeholder="Admin password" autocomplete="current-password">
+          <p id="loginError" class="error"></p>
+          <button type="submit" class="btn full">Login</button>
+        </form>
+      </div>
+
+      <div id="adminDash" class="hidden">
+        <div class="grid four" id="statCards"></div>
+        <div class="card">
+          <div class="admin-bar">
+            <h3>All Orders</h3>
+            <div>
+              <button class="btn small outline" id="refreshBtn">Refresh</button>
+              <button class="btn small outline" id="logoutBtn">Logout</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="ordersBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <strong>SAFFRON</strong> Restaurant &middot; Where Every Bite Tells a Story<br>
+  <small>&copy; SAFFRON Restaurant - College Mini Project</small>
+</footer>
+
+<div id="toast" class="toast"></div>
+<script src="/script.js"></script>
+</body>
+</html>
