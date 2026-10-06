@@ -1,0 +1,39 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
+
+    function validOrder() {
+      let d = request.resource.data;
+      return d.customerName is string
+        && d.customerName.size() >= 2 && d.customerName.size() <= 50
+        && d.customerPhone is string
+        && d.customerPhone.matches('^[0-9]{10}$')
+        && d.items is list && d.items.size() > 0 && d.items.size() <= 50
+        && d.totalAmount is number && d.totalAmount > 0
+        && d.status == 'Pending';
+    }
+
+    // Menu: anyone can view, only admin can change
+    match /menu/{itemId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Orders: customers can only place a valid Pending order;
+    // admin can view, change status and delete
+    match /orders/{orderId} {
+      allow create: if validOrder();
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Everything else stays blocked
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
